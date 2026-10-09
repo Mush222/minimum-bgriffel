@@ -1,5 +1,4 @@
 #include <stdint.h>
-
 #include "minemu/boot.h"
 #include "minemu/irq.h"
 #include "minemu/platform.h"

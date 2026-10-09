@@ -6,8 +6,12 @@ BUILD := build
 KERNEL := $(BUILD)/minimum-kernel.elf
 RUNTIME := $(BUILD)/libminemu_kernel.a
 
-CORE_OBJECT := $(BUILD)/core/helloworld.o
+CORE_OBJECT := $(BUILD)/core/task2.o
 RUNTIME_OBJECTS := \
+	$(BUILD)/core/irq.o \
+	$(BUILD)/runtime/print.o \
+	$(BUILD)/runtime/println.o \
+	$(BUILD)/runtime/readChar.o \
 	$(BUILD)/runtime/block.o \
 	$(BUILD)/runtime/exception.o \
 	$(BUILD)/runtime/memory.o \
@@ -64,6 +68,10 @@ $(KERNEL): $(CORE_OBJECT) $(RUNTIME) linker/kernel.ld
 $(BUILD)/core/%.o: src/core/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+
+$(BUILD)/core/%.o: src/core/%.S
+	@mkdir -p $(dir $@)
+	$(CC) $(CPPFLAGS) $(ASFLAGS) -c $< -o $@
 
 $(BUILD)/runtime/%.o: src/runtime/%.c
 	@mkdir -p $(dir $@)
