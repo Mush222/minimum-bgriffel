@@ -20,8 +20,8 @@
 #define USER_STACK_BOTTOM UINT32_C(0x007ff000)
 #define USER_STACK_TOP UINT32_C(0x00800000)
 
-#define MAX_USER_IMAGE_PAGES 16U
-#define SYSTEM_ROM_TABLE_COUNT 4U
+#define MAX_USER_IMAGE_PAGES 4U
+#define SYSTEM_ROM_TABLE_COUNT 1U
 
 void minemu_enter_user(uint32_t entry_vaddr, uint32_t stack_top)
     __attribute__((noreturn));
