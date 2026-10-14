@@ -6,7 +6,11 @@ BUILD := build
 KERNEL := $(BUILD)/minimum-kernel.elf
 RUNTIME := $(BUILD)/libminemu_kernel.a
 
-CORE_OBJECT := $(BUILD)/core/task2.o
+CORE_OBJECTS := \
+	$(BUILD)/core/task1.o \
+	$(BUILD)/core/svc.o \
+	$(BUILD)/core/user.o 
+
 RUNTIME_OBJECTS := \
 	$(BUILD)/core/irq.o \
 	$(BUILD)/runtime/print.o \
@@ -19,7 +23,7 @@ RUNTIME_OBJECTS := \
 	$(BUILD)/startup/boot.o \
 	$(BUILD)/startup/vectors.o
 
-OBJECTS := $(CORE_OBJECT) $(RUNTIME_OBJECTS)
+OBJECTS := $(CORE_OBJECTS) $(RUNTIME_OBJECTS)
 DEPENDENCIES := $(OBJECTS:.o=.d)
 
 ARCH_FLAGS := -mcpu=cortex-a9 -marm -mfloat-abi=soft
@@ -61,9 +65,9 @@ $(RUNTIME): $(RUNTIME_OBJECTS)
 	@mkdir -p $(dir $@)
 	$(AR) rcs $@ $^
 
-$(KERNEL): $(CORE_OBJECT) $(RUNTIME) linker/kernel.ld
+$(KERNEL): $(CORE_OBJECTS) $(RUNTIME) linker/kernel.ld
 	@mkdir -p $(dir $@)
-	$(CC) $(LDFLAGS) $(CORE_OBJECT) $(RUNTIME) $(LIBGCC) -o $@
+	$(CC) $(LDFLAGS) $(CORE_OBJECTS) $(RUNTIME) $(LIBGCC) -o $@
 
 $(BUILD)/core/%.o: src/core/%.c
 	@mkdir -p $(dir $@)
