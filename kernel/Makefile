@@ -7,7 +7,7 @@ KERNEL := $(BUILD)/minimum-kernel.elf
 RUNTIME := $(BUILD)/libminemu_kernel.a
 
 CORE_OBJECTS := \
-	$(BUILD)/core/task1.o \
+	$(BUILD)/core/task2.o \
 	$(BUILD)/core/svc.o \
 	$(BUILD)/core/user.o 
 
@@ -29,6 +29,7 @@ DEPENDENCIES := $(OBJECTS:.o=.d)
 ARCH_FLAGS := -mcpu=cortex-a9 -marm -mfloat-abi=soft
 CPPFLAGS := -Iinclude
 CFLAGS := $(ARCH_FLAGS) \
+	-O2 \
 	-ffreestanding \
 	-fno-builtin \
 	-fdata-sections \
